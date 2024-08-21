@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: mongo-express
   labels:
-    app:  mongo-express
+    app: mongo-express
 spec:
   replicas: 1
   selector:
@@ -12,14 +12,14 @@ spec:
   template:
     metadata:
       labels:
-        app:  mongo-express
+        app: mongo-express
     spec:
       containers:
       - name: mongo-express
-        image:  mongo-express
-      ports:
-      - containerPort:  8081
-      env:
+        image: mongo-express
+        ports:
+        - containerPort: 8081
+        env:
         - name: ME_CONFIG_MONGODB_ADMINUSERNAME
           valueFrom:
             secretKeyRef:
@@ -36,17 +36,16 @@ spec:
               name: mongodb-configmap
               key: database_url
 ---
-
 apiVersion: v1
-kind: Servise
+kind: Service
 metadata:
   name: mongo-express-service
 spec:
   selector:
-    app:  mongo-expressmongo-express    
+    app: mongo-express
+  type: LoadBalancer  
   ports:
-    - protocol: tcp
-      ports:  8081
+    - protocol: TCP
+      port: 8081
       targetPort: 8081
-      nodePort: 30000          
-
+      nodePort: 30000
