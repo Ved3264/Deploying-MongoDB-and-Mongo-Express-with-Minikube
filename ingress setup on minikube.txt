@@ -1,0 +1,6 @@
+ingress setup on minikube
+
+minikube assons enable ingress
+
+minikube turnel
+ 

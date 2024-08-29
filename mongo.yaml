@@ -20,10 +20,14 @@ spec:
         image: mongo:4.4.10
         ports:
         - containerPort: 27017
+        volumeMounts:
+          - name: mongo-credential
+            mountPath: /run/config
+            readOnly: true
         env:
         - name: MONGO_INITDB_ROOT_USERNAME
           valueFrom:
-            secretKeyRef:
+            secretkeyRef:
               name: mongodb-secret
               key: mongo-root-username
         - name: MONGO_INITDB_ROOT_PASSWORD
@@ -31,6 +35,11 @@ spec:
             secretKeyRef:
               name: mongodb-secret
               key: mongo-root-password
+      volumes:
+      - name: mongo-credential
+        secret:
+          secretName: mongodb-secret
+
 ---
 apiVersion: v1
 kind: Service
@@ -44,3 +53,5 @@ spec:
     - protocol: TCP
       port: 27017
       targetPort: 27017
+
+

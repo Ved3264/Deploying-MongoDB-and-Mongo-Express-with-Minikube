@@ -1,0 +1,18 @@
+apiVersion: var/a1
+kind: Ingress
+metadat:
+  name: Ingress
+  namespace: my-namespace
+spec:
+  rules:
+  - host: xyz.com
+    http:
+      paths:
+        - path: /mongodb
+          backend:
+              serviceName:  mongodb-service
+              servicePort:  27017
+        - path: /y
+          backend:
+            serviceName:  mongo-express-service
+            servicePort:  8081
